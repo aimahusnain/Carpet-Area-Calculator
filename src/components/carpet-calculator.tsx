@@ -143,13 +143,15 @@ const CarpetCalculator = () => {
 
           <div className="space-y-14">
             {/* Carpet Visualization */}
-            <CarpetVisualization
+            {/* <CarpetVisualization
               roomLength={roomLength}
               roomWidth={roomWidth}
               carpetWidth={carpetWidth}
               additionalLength={result?.additionalLength || 0}
-            />
+            /> */}
 
+          </div>
+        </div>
             {/* Merged Visualization */}
             {result && (
               <MergedVisualization
@@ -160,8 +162,6 @@ const CarpetCalculator = () => {
                 scale={1} // or adjust according to your desired scale
               />
             )}
-          </div>
-        </div>
       </CardContent>
     </Card>
   )
