@@ -16,33 +16,33 @@ const CarpetVisualization: React.FC<CarpetVisualizationProps> = ({
   const maxDimension = Math.max(roomLength, roomWidth, carpetWidth, additionalLength)
   const scale = 800 / maxDimension
 
-  const Rectangle = ({ width, height, color, label }: { width: number, height: number, color: string, label: string }) => (
-    <div className="relative mb-16">
-      <div
-        className={`border-2 ${color} opacity-50 flex items-center justify-center`}
-        style={{
-          width: `${width * (scale / 4)}px`,
-          height: `${height * (scale / 4)}px`,
-        }}
-      >
-        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white px-1 text-xs">
-          {`${width}'`}
-        </div>
-        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 bg-white px-1 text-xs">
-          {`${width}'`}
-        </div>
-        <div className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-1/2 bg-white px-1 text-xs vertical-text">
-          {`${height}'`}
-        </div>
-        <div className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-1/2 bg-white px-1 text-xs vertical-text">
-          {`${height}'`}
-        </div>
-        <div className="text-xs font-bold text-gray-700 text-center">
-          {label}
-        </div>
-      </div>
-    </div>
-  )
+//   const Rectangle = ({ width, height, color, label }: { width: number, height: number, color: string, label: string }) => (
+//     <div className="relative mb-16">
+//       <div
+//         className={`border-2 ${color} opacity-50 flex items-center justify-center`}
+//         style={{
+//           width: `${width * (scale / 4)}px`,
+//           height: `${height * (scale / 4)}px`,
+//         }}
+//       >
+//         <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white px-1 text-xs">
+//           {`${width}'`}
+//         </div>
+//         <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 bg-white px-1 text-xs">
+//           {`${width}'`}
+//         </div>
+//         <div className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-1/2 bg-white px-1 text-xs vertical-text">
+//           {`${height}'`}
+//         </div>
+//         <div className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-1/2 bg-white px-1 text-xs vertical-text">
+//           {`${height}'`}
+//         </div>
+//         <div className="text-xs font-bold text-gray-700 text-center">
+//           {label}
+//         </div>
+//       </div>
+//     </div>
+//   )
 
   return (
     <div className="space-y-16">
