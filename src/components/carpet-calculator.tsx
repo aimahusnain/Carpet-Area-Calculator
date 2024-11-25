@@ -65,7 +65,7 @@ const CarpetCalculator = () => {
               id="roomLength"
               type="number"
               value={roomLength || ''}
-              onChange={(e: any) => setRoomLength(parseFloat(e.target.value))}
+              onChange={(e) => setRoomLength(parseFloat(e.target.value))}
               placeholder="Enter room length"
             />
           </div>
@@ -75,13 +75,13 @@ const CarpetCalculator = () => {
               id="roomWidth"
               type="number"
               value={roomWidth || ''}
-              onChange={(e:any) => setRoomWidth(parseFloat(e.target.value))}
+              onChange={(e) => setRoomWidth(parseFloat(e.target.value))}
               placeholder="Enter room width"
             />
           </div>
           <div>
             <Label htmlFor="carpetWidth">Carpet Width (ft)</Label>
-            <Select onValueChange={(value:any) => setCarpetWidth(parseFloat(value) as CarpetWidth)}>
+            <Select onValueChange={(value) => setCarpetWidth(parseFloat(value) as CarpetWidth)}>
               <SelectTrigger>
                 <SelectValue placeholder="Select carpet width" />
               </SelectTrigger>
