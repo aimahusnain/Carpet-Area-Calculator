@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Separator } from '@/components/ui/separator'
-import CarpetVisualization, { verticalTextStyle } from './carpet-visualization'
+import { verticalTextStyle } from './carpet-visualization'
 import MergedVisualization from './MergedVisualization' // Assuming this is the path
 
 type CarpetWidth = 12 | 13.5 | 15
