@@ -34,6 +34,9 @@ const CarpetVisualization: React.FC<CarpetVisualizationProps> = ({
     Math.min(window.innerWidth, window.innerHeight) * 0.8; // Use 80% of available space
   const scale = maxViewDimension / maxDimension;
 
+  // Calculate leftover width when the carpet width is larger than room width
+  const overleftWidth = carpetWidth > roomWidth ? carpetWidth - roomWidth : 0;
+
   const leftoverWidth =
     roomWidth > carpetWidth
       ? carpetWidth - (roomWidth - carpetWidth) * 2
@@ -86,12 +89,6 @@ const CarpetVisualization: React.FC<CarpetVisualizationProps> = ({
                 className="top-0 left-1/2 -translate-x-1/2 -translate-y-full"
                 isVisible={isVisible(roomWidth)}
               />
-              {/* <DimensionLabel
-                dimension={roomWidth}
-                className="bottom-0 left-1/2 -translate-x-1/2 translate-y-full"
-                isVisible={isVisible(roomWidth)}
-              /> */}
-
               {/* Room Length Labels (further outside left and right edges) */}
               <DimensionLabel
                 dimension={roomLength}
@@ -138,6 +135,41 @@ const CarpetVisualization: React.FC<CarpetVisualizationProps> = ({
                 </TooltipContent>
               </Tooltip>
             </div>
+
+{/* Extra Carpet (Overleft) */}
+{overleftWidth > 0 && (
+  <div
+    className="absolute bottom-0 left-0 border-2 border-yellow-500 bg-yellow-200 flex items-center justify-center"
+    style={{
+      width: `${overleftWidth * scale}px`, // width stays the same
+      height: `${roomLength * scale}px`,
+      left: `0px`, // Position it inside the left edge of the main carpet
+    }}
+  >
+    <DimensionLabel
+      dimension={overleftWidth}
+      className="top-1 left-1/2 -translate-x-1/2 -translate-y-1/2"
+      isVisible={isVisible(overleftWidth)}
+    />
+    <DimensionLabel
+      dimension={roomLength}
+      className="top-1/3 right-1 -translate-y-1/2 rotate-90"
+      isVisible={isVisible(roomLength)}
+    />
+    <Tooltip>
+      <TooltipTrigger>
+        <span className="text-lg font-bold text-yellow-700">
+          Overleft Carpet
+        </span>
+      </TooltipTrigger>
+      <TooltipContent>
+        <p>
+          Extra carpet (overleft) dimensions: {overleftWidth.toFixed(2)}&apos; x {roomLength}&apos;
+        </p>
+      </TooltipContent>
+    </Tooltip>
+  </div>
+)}
 
             {/* Cut Piece A */}
             {additionalLength > 0 && (
@@ -222,7 +254,7 @@ const CarpetVisualization: React.FC<CarpetVisualizationProps> = ({
               >
                 <DimensionLabel
                   dimension={leftoverWidth}
-                  className="top-1 left-1/2 -translate-y-1/2 -translate-x-1/2"
+                  className="top-1 left-1/2 -translate-x-1/2 -translate-y-full"
                   isVisible={isVisible(leftoverWidth)}
                 />
                 <DimensionLabel
@@ -233,13 +265,12 @@ const CarpetVisualization: React.FC<CarpetVisualizationProps> = ({
                 <Tooltip>
                   <TooltipTrigger>
                     <span className="text-lg font-bold text-yellow-700">
-                      Leftover
+                      Leftover Piece
                     </span>
                   </TooltipTrigger>
                   <TooltipContent>
                     <p>
-                      Leftover piece dimensions: {leftoverWidth.toFixed(2)}
-                      &apos; x {additionalLength.toFixed(2)}&apos;
+                      Leftover piece dimensions: {leftoverWidth.toFixed(2)}&apos; x {additionalLength.toFixed(2)}&apos;
                     </p>
                   </TooltipContent>
                 </Tooltip>
