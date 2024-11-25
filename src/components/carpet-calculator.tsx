@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Separator } from '@/components/ui/separator'
 import CarpetVisualization, { verticalTextStyle } from './carpet-visualization'
-import MergedVisualization from './MergedVisualization'
+import MergedVisualization from './MergedVisualization' // Assuming this is the path
 
 type CarpetWidth = 12 | 13.5 | 15
 
@@ -142,22 +142,25 @@ const CarpetCalculator = () => {
           </div>
 
           <div className="space-y-14">
+            {/* Carpet Visualization */}
             <CarpetVisualization
               roomLength={roomLength}
               roomWidth={roomWidth}
               carpetWidth={carpetWidth}
               additionalLength={result?.additionalLength || 0}
             />
-          </div>
 
-                {/* Merged Visualization */}
-      <MergedVisualization
-        roomLength={roomLength}
-        roomWidth={roomWidth}
-        carpetWidth={carpetWidth}
-        additionalLength={result?.additionalLength || 0}
-        scale={25}
-      />
+            {/* Merged Visualization */}
+            {result && (
+              <MergedVisualization
+                roomLength={roomLength}
+                roomWidth={roomWidth}
+                carpetWidth={carpetWidth}
+                additionalLength={result?.additionalLength || 0}
+                scale={1} // or adjust according to your desired scale
+              />
+            )}
+          </div>
         </div>
       </CardContent>
     </Card>
@@ -165,4 +168,3 @@ const CarpetCalculator = () => {
 }
 
 export default CarpetCalculator
-

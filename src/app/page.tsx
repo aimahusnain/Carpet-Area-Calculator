@@ -84,6 +84,7 @@ export default function Home() {
           height={1500}
         />
       </div>
+      
     </main>
   );
 }
