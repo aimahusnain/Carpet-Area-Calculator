@@ -22,6 +22,7 @@ import { useEffect, useState } from "react";
 import CarpetVisualization from "./carpet-visualization";
 
 type CarpetWidth = 12 | 13.5 | 15;
+type Unit = 'ft' | 'in';
 
 interface CalculationResult {
   primaryLength: number;
@@ -34,37 +35,46 @@ interface CalculationResult {
 const CarpetCalculator = () => {
   const [roomLength, setRoomLength] = useState<number>(0);
   const [roomWidth, setRoomWidth] = useState<number>(0);
+  const [roomLengthUnit, setRoomLengthUnit] = useState<Unit>('ft');
+  const [roomWidthUnit, setRoomWidthUnit] = useState<Unit>('ft');
   const [carpetWidth, setCarpetWidth] = useState<CarpetWidth>(12);
   const [result, setResult] = useState<CalculationResult | null>(null);
 
+  // Conversion helper function
+  const convertToFeet = (value: number, unit: Unit): number => {
+    return unit === 'in' ? value / 12 : value;
+  };
+
   useEffect(() => {
     calculateCarpet();
-  }, [roomLength, roomWidth, carpetWidth]);
+  }, [roomLength, roomWidth, roomLengthUnit, roomWidthUnit, carpetWidth]);
 
-const calculateCarpet = () => {
-  if (roomLength <= 0 || roomWidth <= 0) return;
+  const calculateCarpet = () => {
+    // Convert inputs to feet
+    const roomLengthFt = convertToFeet(roomLength, roomLengthUnit);
+    const roomWidthFt = convertToFeet(roomWidth, roomWidthUnit);
 
-  const primaryLength = roomLength;
-  const additionalLength = roomWidth > carpetWidth ? roomLength / 2 + 0.25 : 0; // Adjust for seam allowance.
-  const totalLength = primaryLength + additionalLength;
-  const carpetArea = totalLength * carpetWidth;
+    if (roomLengthFt <= 0 || roomWidthFt <= 0) return;
 
-  // Calculate leftover after cuts.
-  const roomArea = roomLength * roomWidth;
-  const cutWidth = roomWidth - carpetWidth; // Width of cut pieces.
-  const cutArea = cutWidth > 0 ? cutWidth * roomLength : 0; // Total area of cut pieces (A and B).
+    const primaryLength = roomLengthFt;
+    const additionalLength = roomWidthFt > carpetWidth ? roomLengthFt / 2 + 0.25 : 0;
+    const totalLength = primaryLength + additionalLength;
+    const carpetArea = totalLength * carpetWidth;
 
-  const leftover = carpetArea - roomArea - cutArea;
+    const roomArea = roomLengthFt * roomWidthFt;
+    const cutWidth = roomWidthFt - carpetWidth;
+    const cutArea = cutWidth > 0 ? cutWidth * roomLengthFt : 0;
 
-  setResult({
-    primaryLength: Math.ceil(primaryLength * 100) / 100,
-    additionalLength: Math.ceil(additionalLength * 100) / 100,
-    totalLength: Math.ceil(totalLength * 100) / 100,
-    leftover: Math.ceil(leftover * 100) / 100,
-    carpetArea: Math.ceil(carpetArea * 100) / 100,
-  });
-};
+    const leftover = carpetArea - roomArea - cutArea;
 
+    setResult({
+      primaryLength: Math.ceil(primaryLength * 100) / 100,
+      additionalLength: Math.ceil(additionalLength * 100) / 100,
+      totalLength: Math.ceil(totalLength * 100) / 100,
+      leftover: Math.ceil(leftover * 100) / 100,
+      carpetArea: Math.ceil(carpetArea * 100) / 100,
+    });
+  };
 
   return (
     <Card className="w-full max-w-6xl mx-auto my-10 shadow-none rounded-md border-none">
@@ -77,31 +87,60 @@ const calculateCarpet = () => {
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div>
             <Label htmlFor="roomLength" className="text-sm font-medium text-cyan-700">
-              Room Length (ft)
+              Room Length
             </Label>
-            <Input
-              id="roomLength"
-              type="number"
-              value={roomLength || ""}
-              onChange={(e) => setRoomLength(parseFloat(e.target.value))}
-              placeholder="Enter room length"
-              className="mt-1 rounded-md border border-cyan-300 focus:border-cyan-500 focus:ring focus:ring-cyan-200"
-            />
+            <div className="flex items-center space-x-2">
+              <Input
+                id="roomLength"
+                type="number"
+                value={roomLength || ""}
+                onChange={(e) => setRoomLength(parseFloat(e.target.value))}
+                placeholder="Enter room length"
+                className="mt-1 rounded-md border border-cyan-300 focus:border-cyan-500 focus:ring focus:ring-cyan-200"
+              />
+              <Select 
+                value={roomLengthUnit}
+                onValueChange={(value: Unit) => setRoomLengthUnit(value)}
+              >
+                <SelectTrigger className="w-24 mt-1">
+                  <SelectValue placeholder="Unit" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="ft">Feet</SelectItem>
+                  <SelectItem value="in">Inches</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
           <div>
             <Label htmlFor="roomWidth" className="text-sm font-medium text-cyan-700">
-              Room Width (ft)
+              Room Width
             </Label>
-            <Input
-              id="roomWidth"
-              type="number"
-              value={roomWidth || ""}
-              onChange={(e) => setRoomWidth(parseFloat(e.target.value))}
-              placeholder="Enter room width"
-              className="mt-1 rounded-md border border-cyan-300 focus:border-cyan-500 focus:ring focus:ring-cyan-200"
-            />
+            <div className="flex items-center space-x-2">
+              <Input
+                id="roomWidth"
+                type="number"
+                value={roomWidth || ""}
+                onChange={(e) => setRoomWidth(parseFloat(e.target.value))}
+                placeholder="Enter room width"
+                className="mt-1 rounded-md border border-cyan-300 focus:border-cyan-500 focus:ring focus:ring-cyan-200"
+              />
+              <Select 
+                value={roomWidthUnit}
+                onValueChange={(value: Unit) => setRoomWidthUnit(value)}
+              >
+                <SelectTrigger className="w-24 mt-1">
+                  <SelectValue placeholder="Unit" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="ft">Feet</SelectItem>
+                  <SelectItem value="in">Inches</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
         </div>
+
 
         <div>
           <Label htmlFor="carpetWidth" className="text-sm font-medium text-cyan-700">
@@ -157,12 +196,12 @@ const calculateCarpet = () => {
           </Table>
         )}
 
-        {/* Carpet Visualization */}
+        {/* Carpet Visualization - pass converted values */}
         {result && roomLength > 0 && roomWidth > 0 && (
           <div className="mt-6">
             <CarpetVisualization
-              roomLength={roomLength}
-              roomWidth={roomWidth}
+              roomLength={convertToFeet(roomLength, roomLengthUnit)}
+              roomWidth={convertToFeet(roomWidth, roomWidthUnit)}
               carpetWidth={carpetWidth}
               additionalLength={result?.additionalLength || 0}
             />
