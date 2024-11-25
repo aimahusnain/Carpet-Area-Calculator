@@ -37,7 +37,7 @@ const CarpetVisualization: React.FC<CarpetVisualizationProps> = ({
         }`}
       >
         <Ruler className="w-4 h-4 mr-1" />
-        {dimension.toFixed(2)}'
+        {dimension.toFixed(2)}&apos;
       </Badge>
     ) : null
   );

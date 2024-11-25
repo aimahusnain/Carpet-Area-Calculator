@@ -41,39 +41,30 @@ const CarpetCalculator = () => {
     calculateCarpet();
   }, [roomLength, roomWidth, carpetWidth]);
 
-  const calculateCarpet = () => {
-    if (roomLength <= 0 || roomWidth <= 0) return;
+const calculateCarpet = () => {
+  if (roomLength <= 0 || roomWidth <= 0) return;
 
-    let primaryLength = roomLength;
-    let additionalLength = 0;
-    let totalLength = 0;
-    let leftover = 0;
-    let carpetArea = 0;
+  const primaryLength = roomLength;
+  const additionalLength = roomWidth > carpetWidth ? roomLength / 2 + 0.25 : 0; // Adjust for seam allowance.
+  const totalLength = primaryLength + additionalLength;
+  const carpetArea = totalLength * carpetWidth;
 
-    if (roomWidth > carpetWidth) {
-      additionalLength = roomLength / 2 + 0.25; // Adjust for seam allowance.
-      totalLength = primaryLength + additionalLength;
-    } else {
-      totalLength = primaryLength;
-    }
+  // Calculate leftover after cuts.
+  const roomArea = roomLength * roomWidth;
+  const cutWidth = roomWidth - carpetWidth; // Width of cut pieces.
+  const cutArea = cutWidth > 0 ? cutWidth * roomLength : 0; // Total area of cut pieces (A and B).
 
-    carpetArea = totalLength * carpetWidth;
+  const leftover = carpetArea - roomArea - cutArea;
 
-    // Calculate leftover after cuts.
-    const roomArea = roomLength * roomWidth;
-    const cutWidth = roomWidth - carpetWidth; // Width of cut pieces.
-    const cutArea = cutWidth > 0 ? cutWidth * roomLength : 0; // Total area of cut pieces (A and B).
+  setResult({
+    primaryLength: Math.ceil(primaryLength * 100) / 100,
+    additionalLength: Math.ceil(additionalLength * 100) / 100,
+    totalLength: Math.ceil(totalLength * 100) / 100,
+    leftover: Math.ceil(leftover * 100) / 100,
+    carpetArea: Math.ceil(carpetArea * 100) / 100,
+  });
+};
 
-    leftover = carpetArea - roomArea - cutArea;
-
-    setResult({
-      primaryLength: Math.ceil(primaryLength * 100) / 100,
-      additionalLength: Math.ceil(additionalLength * 100) / 100,
-      totalLength: Math.ceil(totalLength * 100) / 100,
-      leftover: Math.ceil(leftover * 100) / 100,
-      carpetArea: Math.ceil(carpetArea * 100) / 100,
-    });
-  };
 
   return (
     <Card className="w-full max-w-6xl mx-auto my-10 shadow-none rounded-md border-none bg-cyan-50">
