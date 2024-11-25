@@ -1,11 +1,13 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { Separator } from '@/components/ui/separator'
+import CarpetVisualization from './carpet-visualization'
 
 type CarpetWidth = 12 | 13.5 | 15
 
@@ -22,6 +24,10 @@ const CarpetCalculator = () => {
   const [roomWidth, setRoomWidth] = useState<number>(0)
   const [carpetWidth, setCarpetWidth] = useState<CarpetWidth>(12)
   const [result, setResult] = useState<CalculationResult | null>(null)
+
+  useEffect(() => {
+    calculateCarpet()
+  }, [roomLength, roomWidth, carpetWidth])
 
   const calculateCarpet = () => {
     if (roomLength <= 0 || roomWidth <= 0) return
@@ -53,84 +59,95 @@ const CarpetCalculator = () => {
   }
 
   return (
-    <Card>
+    <Card className="w-full max-w-6xl mx-auto">
       <CardHeader>
-        <CardTitle>Carpet Calculator</CardTitle>
+        <CardTitle className="text-3xl font-bold text-center">Carpet Calculator</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          <div>
-            <Label htmlFor="roomLength">Room Length (ft)</Label>
-            <Input
-              id="roomLength"
-              type="number"
-              value={roomLength || ''}
-              onChange={(e) => setRoomLength(parseFloat(e.target.value))}
-              placeholder="Enter room length"
-            />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="space-y-6">
+            <div className="grid grid-cols-1 gap-4">
+              <div>
+                <Label htmlFor="roomLength">Room Length (ft)</Label>
+                <Input
+                  id="roomLength"
+                  type="number"
+                  value={roomLength || ''}
+                  onChange={(e) => setRoomLength(parseFloat(e.target.value))}
+                  placeholder="Enter room length"
+                  className="mt-1"
+                />
+              </div>
+              <div>
+                <Label htmlFor="roomWidth">Room Width (ft)</Label>
+                <Input
+                  id="roomWidth"
+                  type="number"
+                  value={roomWidth || ''}
+                  onChange={(e) => setRoomWidth(parseFloat(e.target.value))}
+                  placeholder="Enter room width"
+                  className="mt-1"
+                />
+              </div>
+              <Separator className="my-2" />
+              <div>
+                <Label htmlFor="carpetWidth">Carpet Width (ft)</Label>
+                <Select onValueChange={(value) => setCarpetWidth(parseFloat(value) as CarpetWidth)}>
+                  <SelectTrigger className="mt-1">
+                    <SelectValue placeholder="Select carpet width" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="12">12 ft</SelectItem>
+                    <SelectItem value="13.5">13.5 ft</SelectItem>
+                    <SelectItem value="15">15 ft</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            {result && (
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Measurement</TableHead>
+                    <TableHead>Value</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  <TableRow>
+                    <TableCell>Primary Carpet Length</TableCell>
+                    <TableCell>{result.primaryLength.toFixed(2)} ft</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>Additional Length for Seams</TableCell>
+                    <TableCell>{result.additionalLength.toFixed(2)} ft</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>Total Carpet Length</TableCell>
+                    <TableCell>{result.totalLength.toFixed(2)} ft</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>Carpet Area</TableCell>
+                    <TableCell>{result.carpetArea.toFixed(2)} sq ft</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>Leftover Carpet</TableCell>
+                    <TableCell>{result.leftover.toFixed(2)} sq ft</TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            )}
           </div>
-          <div>
-            <Label htmlFor="roomWidth">Room Width (ft)</Label>
-            <Input
-              id="roomWidth"
-              type="number"
-              value={roomWidth || ''}
-              onChange={(e) => setRoomWidth(parseFloat(e.target.value))}
-              placeholder="Enter room width"
+
+          <div className="space-y-6">
+            <CarpetVisualization
+              roomLength={roomLength}
+              roomWidth={roomWidth}
+              carpetWidth={carpetWidth}
+              additionalLength={result?.additionalLength || 0}
             />
-          </div>
-          <div>
-            <Label htmlFor="carpetWidth">Carpet Width (ft)</Label>
-            <Select onValueChange={(value) => setCarpetWidth(parseFloat(value) as CarpetWidth)}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select carpet width" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="12">12 ft</SelectItem>
-                <SelectItem value="13.5">13.5 ft</SelectItem>
-                <SelectItem value="15">15 ft</SelectItem>
-              </SelectContent>
-            </Select>
           </div>
         </div>
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          onClick={calculateCarpet}
-        >
-          Calculate
-        </button>
-        {result && (
-          <Table className="mt-6">
-            <TableHeader>
-              <TableRow>
-                <TableHead>Measurement</TableHead>
-                <TableHead>Value</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              <TableRow>
-                <TableCell>Primary Carpet Length</TableCell>
-                <TableCell>{result.primaryLength.toFixed(2)} ft</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Additional Length for Seams</TableCell>
-                <TableCell>{result.additionalLength.toFixed(2)} ft</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Total Carpet Length</TableCell>
-                <TableCell>{result.totalLength.toFixed(2)} ft</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Carpet Area</TableCell>
-                <TableCell>{result.carpetArea.toFixed(2)} sq ft</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Leftover Carpet</TableCell>
-                <TableCell>{result.leftover.toFixed(2)} sq ft</TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        )}
       </CardContent>
     </Card>
   )
