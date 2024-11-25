@@ -39,7 +39,10 @@ export default function Home() {
     <p>
       There is no need to include the square feet of the room display; leave only the carpet area square.
     </p>
-  </div>      </div>
+  </div>     
+  <Image src="/Prposed Corrections_Page2.jpg" alt="Requirements Image" width={1000} height={1500} />
+
+   </div>
     </main>
   )
 }
