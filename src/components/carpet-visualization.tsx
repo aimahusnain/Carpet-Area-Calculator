@@ -46,7 +46,7 @@ const CarpetVisualization: React.FC<CarpetVisualizationProps> = ({
 
   return (
     <div className="space-y-16">
-      <Rectangle
+      {/* <Rectangle
         width={roomLength}
         height={roomWidth}
         color="border-blue-500 bg-blue-200"
@@ -65,7 +65,7 @@ const CarpetVisualization: React.FC<CarpetVisualizationProps> = ({
           color="border-red-500 bg-red-200"
           label="Cut Piece"
         />
-      )}
+      )} */}
       <div className="relative mt-24">
         <div className="text-sm font-semibold mb-4">Merged Visualization</div>
         <div className="flex">

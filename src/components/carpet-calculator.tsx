@@ -1,14 +1,13 @@
 'use client'
 
-import { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Separator } from '@/components/ui/separator'
-import { verticalTextStyle } from './carpet-visualization'
-import MergedVisualization from './MergedVisualization' // Assuming this is the path
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { useEffect, useState } from 'react'
+import CarpetVisualization, { verticalTextStyle } from './carpet-visualization'
 
 type CarpetWidth = 12 | 13.5 | 15
 
@@ -143,25 +142,15 @@ const CarpetCalculator = () => {
 
           <div className="space-y-14">
             {/* Carpet Visualization */}
-            {/* <CarpetVisualization
+            <CarpetVisualization
               roomLength={roomLength}
               roomWidth={roomWidth}
               carpetWidth={carpetWidth}
               additionalLength={result?.additionalLength || 0}
-            /> */}
+            />
 
           </div>
         </div>
-            {/* Merged Visualization */}
-            {result && (
-              <MergedVisualization
-                roomLength={roomLength}
-                roomWidth={roomWidth}
-                carpetWidth={carpetWidth}
-                additionalLength={result?.additionalLength || 0}
-                scale={1} // or adjust according to your desired scale
-              />
-            )}
       </CardContent>
     </Card>
   )
