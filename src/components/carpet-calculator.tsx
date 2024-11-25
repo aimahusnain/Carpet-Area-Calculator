@@ -103,15 +103,15 @@ const CarpetCalculator = () => {
   };
 
   return (
-    <div className="bg-cyan-50 min-h-screen py-12 px-4 sm:px-6 lg:px-8">
-      <Card className="w-full max-w-4xl mx-auto shadow-2xl rounded-2xl overflow-hidden border-none">
+    <div className="bg-cyan-50 min-h-screen py-12 px-4 sm:px-6 lg:px-8 border-none">
+      <Card className="w-full max-w-4xl mx-auto rounded-2xl border-none">
         <CardHeader className="bg-gradient-to-r from-cyan-500 to-blue-500 p-6">
           <CardTitle className="text-3xl font-extrabold text-white text-center tracking-tight">
             Carpet Calculator
           </CardTitle>
         </CardHeader>
         
-        <CardContent className="p-8 space-y-8 bg-white">
+        <CardContent className="p-8 space-y-8 bg-white border-none">
           {/* Room Length Inputs */}
           <div className="space-y-4">
             <Label className="text-lg font-semibold text-cyan-700">
