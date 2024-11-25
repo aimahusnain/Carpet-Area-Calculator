@@ -1,4 +1,5 @@
 import React from 'react'
+import { Separator } from './ui/separator'
 
 interface CarpetVisualizationProps {
   roomLength: number
@@ -40,6 +41,11 @@ const CarpetVisualization: React.FC<CarpetVisualizationProps> = ({
         <div className="absolute right-0 top-1/2 transform translate-x-6 -translate-y-1/2 text-xs text-gray-600 vertical-text">
           {`${height}'`}
         </div>
+        <div className="flex items-center justify-center">
+        {dimensions}
+        </div>
+        
+        <Separator className="my-6" />
       </div>
     </div>
   )
