@@ -84,7 +84,7 @@ const CarpetVisualization: React.FC<CarpetVisualizationProps> = ({
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>
-                    Room dimensions: {roomWidth}' x {roomLength}'
+                    Room dimensions: {roomWidth}&apos; x {roomLength}&apos;
                   </p>
                 </TooltipContent>
               </Tooltip>
@@ -116,7 +116,7 @@ const CarpetVisualization: React.FC<CarpetVisualizationProps> = ({
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>
-                    Main carpet dimensions: {carpetWidth}' x {roomLength}'
+                    Main carpet dimensions: {carpetWidth}&apos; x {roomLength}&apos;
                   </p>
                 </TooltipContent>
               </Tooltip>
@@ -157,7 +157,7 @@ const CarpetVisualization: React.FC<CarpetVisualizationProps> = ({
                   </TooltipTrigger>
                   <TooltipContent>
                     <p>
-                      Cut piece A dimensions: {(roomWidth - carpetWidth).toFixed(2)}' x {(roomLength / 2).toFixed(2)}'
+                      Cut piece A dimensions: {(roomWidth - carpetWidth).toFixed(2)}&apos; x {(roomLength / 2).toFixed(2)}&apos;
                     </p>
                   </TooltipContent>
                 </Tooltip>
@@ -199,7 +199,7 @@ const CarpetVisualization: React.FC<CarpetVisualizationProps> = ({
                   </TooltipTrigger>
                   <TooltipContent>
                     <p>
-                      Cut piece B dimensions: {(roomWidth - carpetWidth).toFixed(2)}' x {(roomLength / 2).toFixed(2)}'
+                      Cut piece B dimensions: {(roomWidth - carpetWidth).toFixed(2)}&apos; x {(roomLength / 2).toFixed(2)}&apos;
                     </p>
                   </TooltipContent>
                 </Tooltip>
@@ -243,7 +243,7 @@ const CarpetVisualization: React.FC<CarpetVisualizationProps> = ({
                   </TooltipTrigger>
                   <TooltipContent>
                     <p>
-                      Leftover piece dimensions: {leftoverWidth.toFixed(2)}' x {additionalLength.toFixed(2)}'
+                      Leftover piece dimensions: {leftoverWidth.toFixed(2)}&apos; x {additionalLength.toFixed(2)}&apos;
                     </p>
                   </TooltipContent>
                 </Tooltip>
