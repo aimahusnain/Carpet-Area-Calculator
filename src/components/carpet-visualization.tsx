@@ -17,7 +17,7 @@ const CarpetVisualization: React.FC<CarpetVisualizationProps> = ({
   const scale = 200 / maxDimension
 
   const Rectangle = ({ width, height, color, label, dimensions }: { width: number, height: number, color: string, label: string, dimensions: string }) => (
-    <div className="relative mb-4">
+    <div className="relative mb-16">
       <div
         className={`border-2 ${color} opacity-50`}
         style={{
@@ -28,15 +28,24 @@ const CarpetVisualization: React.FC<CarpetVisualizationProps> = ({
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-xs font-bold text-gray-700">
           {label}
         </div>
-      </div>
-      <div className="absolute top-0 left-0 transform -translate-y-full text-xs text-gray-600">
-        {dimensions}
+        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-6 text-xs text-gray-600">
+          {`${width}'`}
+        </div>
+        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-6 text-xs text-gray-600">
+          {`${width}'`}
+        </div>
+        <div className="absolute left-0 top-1/2 transform -translate-x-6 -translate-y-1/2 text-xs text-gray-600 vertical-text">
+          {`${height}'`}
+        </div>
+        <div className="absolute right-0 top-1/2 transform translate-x-6 -translate-y-1/2 text-xs text-gray-600 vertical-text">
+          {`${height}'`}
+        </div>
       </div>
     </div>
   )
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-16">
       <Rectangle
         width={roomLength}
         height={roomWidth}
@@ -60,8 +69,8 @@ const CarpetVisualization: React.FC<CarpetVisualizationProps> = ({
           dimensions={`${additionalLength.toFixed(2)}' x ${carpetWidth}'`}
         />
       )}
-      <div className="relative">
-        <div className="text-sm font-semibold mb-2">Merged Visualization</div>
+      <div className="relative mt-24">
+        <div className="text-sm font-semibold mb-4">Merged Visualization</div>
         <div
           className="border-2 border-blue-500 bg-blue-100 opacity-50"
           style={{
@@ -69,8 +78,17 @@ const CarpetVisualization: React.FC<CarpetVisualizationProps> = ({
             height: `${roomWidth * scale}px`,
           }}
         >
-          <div className="absolute top-0 left-0 transform -translate-y-full text-xs text-gray-600">
-            {`${roomLength}' x ${roomWidth}'`}
+          <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-6 text-xs text-gray-600">
+            {`${roomLength}'`}
+          </div>
+          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-6 text-xs text-gray-600">
+            {`${roomLength}'`}
+          </div>
+          <div className="absolute left-0 top-1/2 transform -translate-x-6 -translate-y-1/2 text-xs text-gray-600 vertical-text">
+            {`${roomWidth}'`}
+          </div>
+          <div className="absolute right-0 top-1/2 transform translate-x-6 -translate-y-1/2 text-xs text-gray-600 vertical-text">
+            {`${roomWidth}'`}
           </div>
           <div
             className="absolute bottom-0 left-0 border-2 border-green-500 bg-green-100 opacity-50"
@@ -79,8 +97,11 @@ const CarpetVisualization: React.FC<CarpetVisualizationProps> = ({
               height: `${carpetWidth * scale}px`,
             }}
           >
-            <div className="absolute top-0 left-0 transform -translate-y-full text-xs text-gray-600">
-              {`${roomLength}' x ${carpetWidth}'`}
+            <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-6 text-xs text-gray-600">
+              {`${roomLength}'`}
+            </div>
+            <div className="absolute left-0 top-1/2 transform -translate-x-6 -translate-y-1/2 text-xs text-gray-600 vertical-text">
+              {`${carpetWidth}'`}
             </div>
           </div>
           {additionalLength > 0 && (
@@ -91,8 +112,11 @@ const CarpetVisualization: React.FC<CarpetVisualizationProps> = ({
                 height: `${carpetWidth * scale}px`,
               }}
             >
-              <div className="absolute top-0 left-0 transform -translate-y-full text-xs text-gray-600">
-                {`${additionalLength.toFixed(2)}' x ${carpetWidth}'`}
+              <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-6 text-xs text-gray-600">
+                {`${additionalLength.toFixed(2)}'`}
+              </div>
+              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-6 text-xs text-gray-600">
+                {`${additionalLength.toFixed(2)}'`}
               </div>
             </div>
           )}
@@ -102,5 +126,14 @@ const CarpetVisualization: React.FC<CarpetVisualizationProps> = ({
   )
 }
 
+const verticalTextStyle = `
+  .vertical-text {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
+`;
+
 export default CarpetVisualization
+
+export { verticalTextStyle }
 

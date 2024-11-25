@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Separator } from '@/components/ui/separator'
-import CarpetVisualization from './carpet-visualization'
+import CarpetVisualization, { verticalTextStyle } from './carpet-visualization'
 
 type CarpetWidth = 12 | 13.5 | 15
 
@@ -60,13 +60,14 @@ const CarpetCalculator = () => {
 
   return (
     <Card className="w-full max-w-6xl mx-auto">
+      <style>{verticalTextStyle}</style>
       <CardHeader>
         <CardTitle className="text-3xl font-bold text-center">Carpet Calculator</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div className="space-y-6">
-            <div className="grid grid-cols-1 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <div className="space-y-8">
+            <div className="grid grid-cols-1 gap-6">
               <div>
                 <Label htmlFor="roomLength">Room Length (ft)</Label>
                 <Input
@@ -139,7 +140,7 @@ const CarpetCalculator = () => {
             )}
           </div>
 
-          <div className="space-y-6">
+          <div className="space-y-14">
             <CarpetVisualization
               roomLength={roomLength}
               roomWidth={roomWidth}
