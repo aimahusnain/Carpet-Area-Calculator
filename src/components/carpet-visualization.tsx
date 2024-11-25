@@ -1,16 +1,21 @@
-"use client"
+"use client";
 
-import React from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
-import { Badge } from "@/components/ui/badge"
-import { Ruler } from 'lucide-react'
+import React from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { Badge } from "@/components/ui/badge";
+import { Ruler } from "lucide-react";
 
 interface CarpetVisualizationProps {
-  roomLength: number
-  roomWidth: number
-  carpetWidth: number
-  additionalLength: number
+  roomLength: number;
+  roomWidth: number;
+  carpetWidth: number;
+  additionalLength: number;
 }
 
 const CarpetVisualization: React.FC<CarpetVisualizationProps> = ({
@@ -19,28 +24,39 @@ const CarpetVisualization: React.FC<CarpetVisualizationProps> = ({
   carpetWidth,
   additionalLength,
 }) => {
-  const maxDimension = Math.max(roomLength, roomWidth, carpetWidth, additionalLength)
-  const maxViewDimension = Math.min(window.innerWidth, window.innerHeight) * 0.8; // Use 80% of available space
+  const maxDimension = Math.max(
+    roomLength,
+    roomWidth,
+    carpetWidth,
+    additionalLength
+  );
+  const maxViewDimension =
+    Math.min(window.innerWidth, window.innerHeight) * 0.8; // Use 80% of available space
   const scale = maxViewDimension / maxDimension;
-  
-  // Adjust leftover width based on cuts
-  const leftoverWidth = roomWidth > carpetWidth ? carpetWidth - (roomWidth - carpetWidth) * 2 : carpetWidth
+
+  const leftoverWidth =
+    roomWidth > carpetWidth
+      ? carpetWidth - (roomWidth - carpetWidth) * 2
+      : carpetWidth;
 
   const isVisible = (dimension: number): boolean => dimension > 0.01;
 
-  const DimensionLabel: React.FC<{ dimension: number; className?: string; isVisible: boolean }> = ({ dimension, className, isVisible }) => (
+  const DimensionLabel: React.FC<{
+    dimension: number;
+    className?: string;
+    isVisible: boolean;
+  }> = ({ dimension, className, isVisible }) =>
     isVisible ? (
       <Badge
         variant="secondary"
         className={`absolute z-10 ${className} ${
-          dimension < 3 ? 'scale-75 opacity-75' : ''
+          dimension < 3 ? "scale-75 opacity-75" : ""
         }`}
       >
         <Ruler className="w-4 h-4 mr-1" />
         {dimension.toFixed(2)}&apos;
       </Badge>
-    ) : null
-  );
+    ) : null;
 
   return (
     <TooltipProvider>
@@ -49,7 +65,13 @@ const CarpetVisualization: React.FC<CarpetVisualizationProps> = ({
           <CardTitle>Carpet Visualization</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="relative" style={{ width: `${roomWidth * scale}px`, height: `${roomLength * scale}px` }}>
+          <div
+            className="relative"
+            style={{
+              width: `${roomWidth * scale}px`,
+              height: `${roomLength * scale}px`,
+            }}
+          >
             {/* Room */}
             <div
               className="absolute inset-0 border-2 border-primary bg-primary/10 flex items-center justify-center"
@@ -58,26 +80,30 @@ const CarpetVisualization: React.FC<CarpetVisualizationProps> = ({
                 height: `${roomLength * scale}px`,
               }}
             >
-              <DimensionLabel 
-                dimension={roomWidth} 
-                className="top-0 left-1/2 -translate-x-1/2 -translate-y-full" 
+              {/* Room Width Labels (inside top and bottom edges) */}
+              <DimensionLabel
+                dimension={roomWidth}
+                className="top-0 left-1/2 -translate-x-1/2 -translate-y-full"
                 isVisible={isVisible(roomWidth)}
               />
-              <DimensionLabel 
-                dimension={roomWidth} 
-                className="bottom-0 left-1/2 -translate-x-1/2 translate-y-full" 
+              {/* <DimensionLabel
+                dimension={roomWidth}
+                className="bottom-0 left-1/2 -translate-x-1/2 translate-y-full"
                 isVisible={isVisible(roomWidth)}
-              />
+              /> */}
+
+              {/* Room Length Labels (further outside left and right edges) */}
               <DimensionLabel
                 dimension={roomLength}
-                className="left-0 top-1/2 -translate-y-1/2 -translate-x-full -rotate-90"
+                className="top-1/2 left-[-20px] -translate-y-1/2 -translate-x-full -rotate-90"
                 isVisible={isVisible(roomLength)}
               />
               <DimensionLabel
                 dimension={roomLength}
-                className="right-0 top-1/2 -translate-y-1/2 translate-x-full rotate-90"
+                className="top-1/2 right-[-20px] -translate-y-1/2 translate-x-full rotate-90"
                 isVisible={isVisible(roomLength)}
               />
+
               <Tooltip>
                 <TooltipTrigger>
                   <span className="text-lg font-bold text-primary">Room</span>
@@ -98,25 +124,16 @@ const CarpetVisualization: React.FC<CarpetVisualizationProps> = ({
                 height: `${roomLength * scale}px`,
               }}
             >
-              <DimensionLabel dimension={carpetWidth} className="top-0 left-1/2 -translate-x-1/2 -translate-y-full" isVisible={isVisible(carpetWidth)} />
-              <DimensionLabel dimension={carpetWidth} className="bottom-0 left-1/2 -translate-x-1/2 translate-y-full" isVisible={isVisible(carpetWidth)} />
-              <DimensionLabel
-                dimension={roomLength}
-                className="left-0 top-1/2 -translate-y-1/2 -translate-x-full -rotate-90"
-                isVisible={isVisible(roomLength)}
-              />
-              <DimensionLabel
-                dimension={roomLength}
-                className="right-0 top-1/2 -translate-y-1/2 translate-x-full rotate-90"
-                isVisible={isVisible(roomLength)}
-              />
               <Tooltip>
                 <TooltipTrigger>
-                  <span className="text-lg font-bold text-green-700">Main Carpet</span>
+                  <span className="text-lg font-bold text-green-700">
+                    Main Carpet
+                  </span>
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>
-                    Main carpet dimensions: {carpetWidth}&apos; x {roomLength}&apos;
+                    Main carpet dimensions: {carpetWidth}&apos; x {roomLength}
+                    &apos;
                   </p>
                 </TooltipContent>
               </Tooltip>
@@ -133,31 +150,24 @@ const CarpetVisualization: React.FC<CarpetVisualizationProps> = ({
               >
                 <DimensionLabel
                   dimension={roomWidth - carpetWidth}
-                  className="top-0 left-1/2 -translate-x-full -translate-y-full"
-                  isVisible={isVisible(roomWidth - carpetWidth)}
-                />
-                <DimensionLabel
-                  dimension={roomWidth - carpetWidth}
-                  className="bottom-0 left-1/2 -translate-x-full translate-y-full"
+                  className="bottom-1 left-1/2 -translate-x-1/2 translate-y-full"
                   isVisible={isVisible(roomWidth - carpetWidth)}
                 />
                 <DimensionLabel
                   dimension={roomLength / 2}
-                  className="right-0 top-1/2 -translate-y-1/2 translate-x-full rotate-90"
+                  className="top-1/2 right-1 -translate-y-1/2 translate-x-full rotate-90"
                   isVisible={isVisible(roomLength / 2)}
                 />
-                <DimensionLabel
-                  dimension={roomLength / 2}
-                  className="left-0 top-1/2 -translate-y-1/2 -translate-x-full -rotate-90"
-                  isVisible={isVisible(roomLength / 2)}
-                />
+
                 <Tooltip>
                   <TooltipTrigger>
                     <span className="text-lg font-bold text-purple-700">A</span>
                   </TooltipTrigger>
                   <TooltipContent>
                     <p>
-                      Cut piece A dimensions: {(roomWidth - carpetWidth).toFixed(2)}&apos; x {(roomLength / 2).toFixed(2)}&apos;
+                      Cut piece A dimensions:{" "}
+                      {(roomWidth - carpetWidth).toFixed(2)}&apos; x{" "}
+                      {(roomLength / 2).toFixed(2)}&apos;
                     </p>
                   </TooltipContent>
                 </Tooltip>
@@ -175,31 +185,24 @@ const CarpetVisualization: React.FC<CarpetVisualizationProps> = ({
               >
                 <DimensionLabel
                   dimension={roomWidth - carpetWidth}
-                  className="top-0 left-1/2 -translate-x-full -translate-y-full"
-                  isVisible={isVisible(roomWidth - carpetWidth)}
-                />
-                <DimensionLabel
-                  dimension={roomWidth - carpetWidth}
-                  className="bottom-0 left-1/2 -translate-x-full translate-y-full"
+                  className="bottom-1 left-1/2 -translate-x-1/2 translate-y-full"
                   isVisible={isVisible(roomWidth - carpetWidth)}
                 />
                 <DimensionLabel
                   dimension={roomLength / 2}
-                  className="right-0 top-1/2 -translate-y-1/2 translate-x-full rotate-90"
+                  className="top-1/2 right-1 -translate-y-1/2 translate-x-full rotate-90"
                   isVisible={isVisible(roomLength / 2)}
                 />
-                <DimensionLabel
-                  dimension={roomLength / 2}
-                  className="left-0 top-1/2 -translate-y-1/2 -translate-x-full -rotate-90"
-                  isVisible={isVisible(roomLength / 2)}
-                />
+
                 <Tooltip>
                   <TooltipTrigger>
                     <span className="text-lg font-bold text-orange-700">B</span>
                   </TooltipTrigger>
                   <TooltipContent>
                     <p>
-                      Cut piece B dimensions: {(roomWidth - carpetWidth).toFixed(2)}&apos; x {(roomLength / 2).toFixed(2)}&apos;
+                      Cut piece B dimensions:{" "}
+                      {(roomWidth - carpetWidth).toFixed(2)}&apos; x{" "}
+                      {(roomLength / 2).toFixed(2)}&apos;
                     </p>
                   </TooltipContent>
                 </Tooltip>
@@ -219,31 +222,24 @@ const CarpetVisualization: React.FC<CarpetVisualizationProps> = ({
               >
                 <DimensionLabel
                   dimension={leftoverWidth}
-                  className="top-0 left-1/2 -translate-x-full -translate-y-full"
-                  isVisible={isVisible(leftoverWidth)}
-                />
-                <DimensionLabel
-                  dimension={leftoverWidth}
-                  className="bottom-0 left-1/2 -translate-x-full translate-y-full"
+                  className="top-1 left-1/2 -translate-y-1/2 -translate-x-1/2"
                   isVisible={isVisible(leftoverWidth)}
                 />
                 <DimensionLabel
                   dimension={additionalLength}
-                  className="right-0 top-1/2 -translate-y-1/2 translate-x-full rotate-90"
-                  isVisible={isVisible(additionalLength)}
-                />
-                <DimensionLabel
-                  dimension={additionalLength}
-                  className="left-0 top-1/2 -translate-y-1/2 -translate-x-full -rotate-90"
+                  className="top-1/2 right-1 -translate-y-1/2 rotate-90"
                   isVisible={isVisible(additionalLength)}
                 />
                 <Tooltip>
                   <TooltipTrigger>
-                    <span className="text-lg font-bold text-yellow-700">Leftover</span>
+                    <span className="text-lg font-bold text-yellow-700">
+                      Leftover
+                    </span>
                   </TooltipTrigger>
                   <TooltipContent>
                     <p>
-                      Leftover piece dimensions: {leftoverWidth.toFixed(2)}&apos; x {additionalLength.toFixed(2)}&apos;
+                      Leftover piece dimensions: {leftoverWidth.toFixed(2)}
+                      &apos; x {additionalLength.toFixed(2)}&apos;
                     </p>
                   </TooltipContent>
                 </Tooltip>
@@ -253,8 +249,7 @@ const CarpetVisualization: React.FC<CarpetVisualizationProps> = ({
         </CardContent>
       </Card>
     </TooltipProvider>
-  )
-}
+  );
+};
 
-export default CarpetVisualization
-
+export default CarpetVisualization;
