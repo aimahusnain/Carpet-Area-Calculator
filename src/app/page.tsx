@@ -77,14 +77,7 @@ export default function Home() {
             leave only the carpet area square.
           </p>
         </div>
-        <Image
-          src="/Prposed Corrections_Page2.jpg"
-          alt="Requirements Image"
-          width={1000}
-          height={1500}
-        />
       </div>
-      
     </main>
   );
 }

@@ -1,10 +1,10 @@
-import React from 'react'
+import React from "react";
 
 interface CarpetVisualizationProps {
-  roomLength: number
-  roomWidth: number
-  carpetWidth: number
-  additionalLength: number
+  roomLength: number;
+  roomWidth: number;
+  carpetWidth: number;
+  additionalLength: number;
 }
 
 const CarpetVisualization: React.FC<CarpetVisualizationProps> = ({
@@ -13,164 +13,127 @@ const CarpetVisualization: React.FC<CarpetVisualizationProps> = ({
   carpetWidth,
   additionalLength,
 }) => {
-  const maxDimension = Math.max(roomLength, roomWidth, carpetWidth, additionalLength)
-  const scale = 800 / maxDimension
+  const maxDimension = Math.max(
+    roomLength,
+    roomWidth,
+    carpetWidth,
+    additionalLength
+  );
+  const scale = 700 / maxDimension;
 
-//   const Rectangle = ({ width, height, color, label }: { width: number, height: number, color: string, label: string }) => (
-//     <div className="relative mb-16">
-//       <div
-//         className={`border-2 ${color} opacity-50 flex items-center justify-center`}
-//         style={{
-//           width: `${width * (scale / 4)}px`,
-//           height: `${height * (scale / 4)}px`,
-//         }}
-//       >
-//         <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white px-1 text-xs">
-//           {`${width}'`}
-//         </div>
-//         <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 bg-white px-1 text-xs">
-//           {`${width}'`}
-//         </div>
-//         <div className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-1/2 bg-white px-1 text-xs vertical-text">
-//           {`${height}'`}
-//         </div>
-//         <div className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-1/2 bg-white px-1 text-xs vertical-text">
-//           {`${height}'`}
-//         </div>
-//         <div className="text-xs font-bold text-gray-700 text-center">
-//           {label}
-//         </div>
-//       </div>
-//     </div>
-//   )
+  // Adjust leftover width based on cuts
+  const leftoverWidth =
+    roomWidth > carpetWidth
+      ? carpetWidth - (roomWidth - carpetWidth) * 2
+      : carpetWidth;
 
   return (
     <div className="space-y-16">
-      {/* <Rectangle
-        width={roomLength}
-        height={roomWidth}
-        color="border-blue-500 bg-blue-200"
-        label="Room"
-      />
-      <Rectangle
-        width={roomLength}
-        height={carpetWidth}
-        color="border-green-500 bg-green-200"
-        label="Carpet"
-      />
-      {additionalLength > 0 && (
-        <Rectangle
-          width={additionalLength}
-          height={carpetWidth}
-          color="border-red-500 bg-red-200"
-          label="Cut Piece"
-        />
-      )} */}
-      <div className="relative mt-24">
-        <div className="text-sm font-semibold mb-4">Merged Visualization</div>
-        <div className="flex">
-          <div className="relative">
+      <div className="text-sm font-semibold mb-4">Merged Visualization</div>
+      <div className="flex">
+        <div className="relative">
+          {/* Room */}
+          <div
+            className="relative border-2 border-blue-500 bg-blue-200 flex items-center justify-center"
+            style={{
+              width: `${roomWidth * scale}px`,
+              height: `${roomLength * scale}px`,
+            }}
+          >
+            {/* Room Width Labels */}
+            <div className="z-50 absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white px-1 text-sm">
+              {`${roomWidth}'`}
+            </div>
+            <div className="z-50 absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 bg-white px-1 text-sm">
+              {`${roomWidth}'`}
+            </div>
+            {/* Room Length Labels */}
+            <div className="z-50 absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-1/2 bg-white px-1 text-sm vertical-text">
+              {`${roomLength}'`}
+            </div>
+            <div className="z-50 absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-1/2 bg-white px-1 text-sm vertical-text">
+              {`${roomLength}'`}
+            </div>
+            <div className="text-lg font-bold text-gray-700 text-center">
+              Room
+            </div>
+
+            {/* Main Carpet */}
             <div
-              className="relative border-2 border-blue-500 bg-blue-200 flex items-center justify-center"
+              className="absolute bottom-0 left-0 border-2 border-green-500 bg-green-200 flex items-center justify-center"
               style={{
-                width: `${roomLength * scale}px`,
-                height: `${roomWidth * scale}px`,
+                width: `${carpetWidth * scale}px`,
+                height: `${roomLength * scale}px`,
               }}
             >
+              {/* Main Carpet Width Label */}
               <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white px-1 text-sm">
-                {`${roomLength}'`}
+                {`${carpetWidth}'`}
               </div>
               <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 bg-white px-1 text-sm">
+                {`${carpetWidth}'`}
+              </div>
+              {/* Main Carpet Length Label */}
+              <div className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-1/2 bg-white px-1 text-sm vertical-text">
                 {`${roomLength}'`}
               </div>
-              <div className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-1/2 bg-white px-1 text-sm vertical-text">
-                {`${roomWidth}'`}
-              </div>
               <div className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-1/2 bg-white px-1 text-sm vertical-text">
-                {`${roomWidth}'`}
+                {`${roomLength}'`}
               </div>
               <div className="text-lg font-bold text-gray-700 text-center">
-                Room
+                Main Carpet
               </div>
+            </div>
 
-              {/* Main Carpet Section */}
+            {/* Cut Piece A */}
+            {additionalLength > 0 && (
               <div
-                className="absolute bottom-0 left-0 border-2 border-green-500 bg-green-200 flex items-center justify-center"
+                className="absolute top-0 right-0 border-2 border-purple-500 bg-purple-200 flex items-center justify-center"
                 style={{
-                  width: `${roomLength * scale}px`,
-                  height: `${carpetWidth * scale}px`,
+                  width: `${(roomWidth - carpetWidth) * scale}px`,
+                  height: `${(roomLength / 2) * scale}px`,
                 }}
               >
                 <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white px-1 text-sm">
-                  {`${roomLength}'`}
+                  {`${(roomWidth - carpetWidth).toFixed(2)}'`}
+                </div>
+                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 bg-white px-1 text-sm">
+                  {`${(roomWidth - carpetWidth).toFixed(2)}'`}
+                </div>
+                <div className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-1/2 bg-white px-1 text-sm vertical-text">
+                  {`${(roomLength / 2).toFixed(2)}'`}
                 </div>
                 <div className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-1/2 bg-white px-1 text-sm vertical-text">
-                  {`${carpetWidth}'`}
+                  {`${(roomLength / 2).toFixed(2)}'`}
                 </div>
                 <div className="text-lg font-bold text-gray-700 text-center">
-                  Main Carpet
+                  A
                 </div>
               </div>
-
-              {/* First Cut Piece Section */}
-              {additionalLength > 0 && (
-                <div
-                  className="absolute top-0 left-0 border-2 border-red-500 bg-red-200 flex items-center justify-center"
-                  style={{
-                    width: `${(roomLength / 2) * scale}px`,
-                    height: `${(roomWidth - carpetWidth) * scale}px`,
-                  }}
-                >
-                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white px-1 text-sm">
-                    {`${(roomLength / 2).toFixed(2)}'`}
-                  </div>
-                  <div className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-1/2 bg-white px-1 text-sm vertical-text">
-                    {`${(roomWidth - carpetWidth).toFixed(2)}'`}
-                  </div>
-                  <div className="text-lg font-bold text-gray-700 text-center">
-                    Cut Piece 1
-                  </div>
-                </div>
-              )}
-
-              {/* Second Cut Piece Section */}
-              {additionalLength > 0 && (
-                <div
-                  className="absolute top-0 right-0 border-2 border-purple-500 bg-purple-200 flex items-center justify-center"
-                  style={{
-                    width: `${(roomLength / 2) * scale}px`,
-                    height: `${(roomWidth - carpetWidth) * scale}px`,
-                  }}
-                >
-                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white px-1 text-sm">
-                    {`${(roomLength / 2).toFixed(2)}'`}
-                  </div>
-                  <div className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-1/2 bg-white px-1 text-sm vertical-text">
-                    {`${(roomWidth - carpetWidth).toFixed(2)}'`}
-                  </div>
-                  <div className="text-lg font-bold text-gray-700 text-center">
-                    Cut Piece 2
-                  </div>
-                </div>
-              )}
-            </div>
+            )}
 
             {/* Leftover Piece */}
             {additionalLength > 0 && (
               <div
                 className="absolute border-2 border-yellow-500 bg-yellow-200 flex items-center justify-center"
                 style={{
-                  width: `${additionalLength * scale}px`,
-                  height: `${carpetWidth * scale}px`,
-                  top: '0px',
-                  left: `${roomLength * scale}px`,
+                  width: `${leftoverWidth * scale}px`,
+                  height: `${additionalLength * scale}px`,
+                  top: `${roomLength * scale}px`,
+                  left: "0px",
                 }}
               >
                 <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white px-1 text-sm">
-                  {`${additionalLength.toFixed(2)}'`}
+                  {`${leftoverWidth.toFixed(2)}'`}
+                </div>
+                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 bg-white px-1 text-sm">
+                  {`${leftoverWidth.toFixed(2)}'`}
                 </div>
                 <div className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-1/2 bg-white px-1 text-sm vertical-text">
-                  {`${carpetWidth}'`}
+                  {`${additionalLength.toFixed(2)}'`}
+                </div>
+                <div className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-1/2 bg-white px-1 text-sm vertical-text">
+                  {`${additionalLength.toFixed(2)}'`}
                 </div>
                 <div className="text-lg font-bold text-gray-700 text-center">
                   Leftover
@@ -181,8 +144,8 @@ const CarpetVisualization: React.FC<CarpetVisualizationProps> = ({
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 const verticalTextStyle = `
   .vertical-text {
@@ -191,7 +154,6 @@ const verticalTextStyle = `
   }
 `;
 
-export default CarpetVisualization
+export default CarpetVisualization;
 
-export { verticalTextStyle }
-
+export { verticalTextStyle };
