@@ -4,11 +4,13 @@ import Image from "next/image";
 export default function Home() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-blue-100 to-green-100 py-8">
-    <div className="container mx-auto px-4">
-      <h1 className="text-4xl font-bold text-center mb-8 text-blue-800">Carpet Calculator</h1>
-      <CarpetCalculator />
-    </div>
-    <div>
+      <div className="container mx-auto px-4">
+        <h1 className="text-4xl font-bold text-center mb-8 text-blue-800">
+          Carpet Calculator
+        </h1>
+        <CarpetCalculator />
+      </div>
+      <div>
         <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg">
           <h1 className="text-2xl font-bold mb-4">Carpet Calculation Guide</h1>
           <p className="mb-4">
@@ -82,6 +84,6 @@ export default function Home() {
           height={1500}
         />
       </div>
-  </main>
+    </main>
   );
 }

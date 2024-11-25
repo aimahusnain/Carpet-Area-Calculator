@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Separator } from '@/components/ui/separator'
 import CarpetVisualization, { verticalTextStyle } from './carpet-visualization'
+import MergedVisualization from './MergedVisualization'
 
 type CarpetWidth = 12 | 13.5 | 15
 
@@ -148,6 +149,15 @@ const CarpetCalculator = () => {
               additionalLength={result?.additionalLength || 0}
             />
           </div>
+
+                {/* Merged Visualization */}
+      <MergedVisualization
+        roomLength={roomLength}
+        roomWidth={roomWidth}
+        carpetWidth={carpetWidth}
+        additionalLength={result?.additionalLength || 0}
+        scale={25}
+      />
         </div>
       </CardContent>
     </Card>
