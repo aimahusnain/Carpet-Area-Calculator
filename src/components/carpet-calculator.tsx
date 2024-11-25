@@ -67,7 +67,7 @@ const calculateCarpet = () => {
 
 
   return (
-    <Card className="w-full max-w-6xl mx-auto my-10 shadow-none rounded-md border-none bg-cyan-50">
+    <Card className="w-full max-w-6xl mx-auto my-10 shadow-none rounded-md border-none">
       <CardHeader className="p-6">
         <CardTitle className="text-3xl font-bold text-cyan-700 text-center">
           Carpet Calculator
@@ -135,15 +135,15 @@ const calculateCarpet = () => {
             <TableBody>
               <TableRow>
                 <TableCell>Primary Carpet Length</TableCell>
-                <TableCell>{result.primaryLength.toFixed(2)} ft</TableCell>
+                <TableCell>{carpetWidth} x {result.primaryLength.toFixed(2)} ft</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell>Additional Length for Seams</TableCell>
-                <TableCell>{result.additionalLength.toFixed(2)} ft</TableCell>
+                <TableCell>{carpetWidth} x {result.additionalLength.toFixed(2)} ft</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell>Total Carpet Length</TableCell>
-                <TableCell>{result.totalLength.toFixed(2)} ft</TableCell>
+                <TableCell>{carpetWidth} x {result.totalLength.toFixed(2)} ft</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell>Carpet Area</TableCell>
