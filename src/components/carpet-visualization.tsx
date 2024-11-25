@@ -255,7 +255,7 @@ const CarpetVisualization: React.FC<CarpetVisualizationProps> = ({
               >
                 <DimensionLabel
                   dimension={leftoverWidth}
-                  className="top-1 left-1/2 -translate-x-1/2 -translate-y-full"
+                  className="top-8 left-1/2 -translate-x-1/2 -translate-y-full"
                   isVisible={isVisible(leftoverWidth)}
                 />
                 <DimensionLabel
